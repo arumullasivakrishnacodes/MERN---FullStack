@@ -1,0 +1,12 @@
+:root {
+  
+  --background: #fbfbfb;
+  --border: #ebebeb;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: var(--background);
+  height: 100vh;
+}
