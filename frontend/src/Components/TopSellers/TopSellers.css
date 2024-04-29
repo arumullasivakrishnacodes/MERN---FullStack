@@ -1,0 +1,50 @@
+.topsellers-main-component {
+    .slick-track {
+        display: flex;
+        column-gap: 24px;
+        height: 440px;
+    }
+
+    .slick-prev, .slick-next {
+        width: 60px;
+        height: 60px;
+        background: none;
+        border: 1px solid none;
+        border-radius: 50%;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .slick-prev::before {
+        color: var(--primary-blue);
+        font-size: 32px;
+        line-height: 2;
+        opacity: 1;
+    }
+
+    .slick-next::before {
+        color: var(--primary-blue);
+        font-size: 32px;
+        line-height: 2;
+        opacity: 1;
+    }
+
+    .heading-section {
+        font-size: 42px;
+        font-weight: 600;
+        margin: 24px 0;
+    }
+}
+
+@media (max-width:768px) {
+    .slick-track {
+        height: 278px !important;
+    }
+    .heading-section {
+        font-size: 30px !important;
+        font-weight: 600;
+        margin: 20px 0 !important;
+    }
+}

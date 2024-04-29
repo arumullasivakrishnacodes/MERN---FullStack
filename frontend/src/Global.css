@@ -1,0 +1,17 @@
+:root {
+    --font: "Poppins", sans-serif;
+
+    /* colors */
+    --box-shadow: 3px 8px 9px lightgray;
+    --primary-whitesmoke: whitesmoke;
+    --white: #ffffff;
+    --black: #000000;
+    --lightgray: lightgray;
+    --primary-blue: #0078d1;
+    --red: #c00;
+    --green: #1e9541;
+    --light-pink: #d14a61;
+    --light-blue-shade: #0078d191;
+    --gray-shade: #fbfbfb;
+    --gray-shade-border: #ebebeb;
+}
