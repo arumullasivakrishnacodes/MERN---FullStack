@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoginImg from "../../Assets/Images/loginpage-image.jpg";
 import "../Login/Login.css";
 import LoginProfileImg from "../../Assets/Images/Login-profile-img.png";
@@ -7,54 +7,71 @@ import { NavLink } from "react-router-dom";
 function Login() {
   const [loginstep, setloginstep] = useState("mobile");
   const [errormsgmobile, seterrormsgmobile] = useState("");
+  const [otpValue, setOtpValue] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
 
-  const [inputs, setInputs] = useState(["", "", "", ""]);
-  const refs = [useRef(), useRef(), useRef(), useRef()];
-
-  const handleInputChange = (index, value) => {
-    // Check if the entered value is a number
-    if (!isNaN(value)) {
-      const newInputs = [...inputs];
-      newInputs[index] = value;
-      setInputs(newInputs);
-
-      // Move focus to next input if value is entered
-      if (value !== "" && index < 3) {
-        refs[index + 1].current.focus();
-      }
+  useEffect(() => {
+    if (localStorage.getItem('loginUser')) {
+      setloginstep("Autenticated");
     }
+  },[])
+
+  const handleChangeMobile = (e) => {
+    // Remove non-numeric characters from the input value using a regular expression
+    const newValue = e.target.value.replace(/\D/g, '');
+    setMobileNumber(newValue);
   };
 
-  const handleKeyDown = (index, e) => {
-    if (e.key === "Backspace" && inputs[index] === "") {
-      // Move focus to previous input and clear value
-      if (index > 0) {
-        const newInputs = [...inputs];
-        newInputs[index - 1] = "";
-        setInputs(newInputs);
-        refs[index - 1].current.focus();
-      }
-    }
-  };
-
-  const handleChange = (event) => {
-    const input = event.target.value;
-    const numericInput = input.replace(/[^0-9]/g, ""); // Replace any non-numeric character with an empty string
-    document.getElementById("MobileNumber").value = numericInput; // Update the state with the numeric only input
+  const handleChangeOTP = (e) => {
+    // Remove non-numeric characters from the input value using a regular expression
+    const newValue = e.target.value.replace(/\D/g, '');
+    setOtpValue(newValue);
   };
 
   const handleGetOtp = () => {
-    let getInputValue = document.getElementById("MobileNumber").value;
-
-    if (getInputValue === "") {
+    if (mobileNumber === "") {
       seterrormsgmobile("Please Enter Mobile Number");
-    } else if (getInputValue.length < 10) {
+    } else if (mobileNumber.length < 10) {
       seterrormsgmobile("Please Provide 10 digits Number");
     } else {
       seterrormsgmobile("");
       setloginstep("otp");
     }
   };
+
+  const submitOTP = async () => {
+    if (otpValue === "") {
+      seterrormsgmobile("Please Enter OTP");
+    } else if (otpValue.length < 4) {
+      seterrormsgmobile("Please Provide 4 digits OTP");
+    } else if (otpValue !== '1998') {
+      seterrormsgmobile("Incorrect OTP");
+    } else {
+      seterrormsgmobile("");
+      const userdetail = {
+        mobile: mobileNumber,
+        otp: otpValue
+      }
+
+      let responseData;
+      let userDetail = userdetail;
+  
+      await fetch('http://localhost:4000/login', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userDetail),
+      }).then((res) => res.json()).then((data) => {responseData = data});
+      localStorage.setItem('loginUser', responseData.mobile)
+
+      setloginstep("Autenticated");
+      alert(JSON.stringify(responseData));
+    }
+  }
+
+
 
   if (loginstep === "mobile") {
     return (
@@ -72,7 +89,8 @@ function Login() {
             <input
               type="text"
               id="MobileNumber"
-              onChange={handleChange}
+              value={mobileNumber}
+              onChange={handleChangeMobile}
               className="mobile-input"
               pattern="[0-9]*"
               maxlength="10"
@@ -106,47 +124,15 @@ function Login() {
           <img src={LoginProfileImg} className="profile-image" alt="" />
           <p className="otpheading">Enter OTP</p>
           <div className="otp-input-container" id="otpinputsContainer">
-            <input
-              type="text"
-              id="otpInput"
-              onChange={(e) => handleInputChange(0, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(0, e)}
-              ref={refs[0]}
-              pattern="[0-9]*"
-              maxlength="1"
-            />
-            <input
-              type="text"
-              id="otpInput"
-              onChange={(e) => handleInputChange(1, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(1, e)}
-              ref={refs[1]}
-              pattern="[0-9]*"
-              maxlength="1"
-            />
-            <input
-              type="text"
-              id="otpInput"
-              onChange={(e) => handleInputChange(2, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(2, e)}
-              ref={refs[2]}
-              pattern="[0-9]*"
-              maxlength="1"
-            />
-            <input
-              type="text"
-              id="otpInput"
-              onChange={(e) => handleInputChange(3, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(3, e)}
-              ref={refs[3]}
-              pattern="[0-9]*"
-              maxlength="1"
-            />
+            <input type="text" id="otpInput" value={otpValue} pattern="[0-9]*" maxlength="4" onChange={handleChangeOTP} /><br/>
+            <p className={`error-message-mobile error-message ${errormsgmobile === "" ? "d-none" : ""}`}>{errormsgmobile}</p>
           </div>
-          <button className="submit-otp">SUBMIT OTP</button>
+          <button className="submit-otp" onClick={submitOTP}>SUBMIT OTP</button>
         </div>
       </div>
     );
+  } else if (loginstep === 'Autenticated') {
+    return <div>Profile Page</div>
   }
 }
 

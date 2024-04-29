@@ -181,7 +181,63 @@ app.post('/removeproduct', async (req,res) => {
 app.get('/allproducts', async (req,res) => {
     let products = await Product.find({});
     res.send(products);
-})
+});
+
+//Creating API for getting newcollectionproducts
+app.get('/allNewCollections', async (req,res) => {
+    let products = await NewCollection.find({});
+    res.send(products);
+});
+
+
+// Schema for Users
+const User = mongoose.model('User', {
+    name: {
+        type: String,
+    },
+    mobile: {
+        type: Number,
+        required: true
+    },
+    otp: {
+        type: Number,
+        required: true
+    },
+    email: {
+        type: String
+    },
+    date: {
+        type: Date,
+        default: Date.now()
+    }
+});
+
+// API Endpoint for User Login
+app.post('/login', async (req,res) => {
+    let users = await User.find({});
+    let existUser = users.filter((product) =>{ return product.mobile === Number(req.body.mobile)});
+    if (existUser.length > 0) {
+        res.json({
+            success: true,
+            mobile: req.body.mobile,
+            status: 'Exist User'
+        })
+    } else {
+        const user = new User({
+            mobile: req.body.mobile,
+            otp: req.body.otp,
+            email: req.body.email ? req.body.email : '',
+            name: req.body.name ? req.body.name : '',
+        });
+        await user.save();
+        res.json({
+            success: true,
+            mobile: req.body.mobile,
+            status: 'New User'
+        });
+    }
+    
+});
 
 app.listen(port,(error) => {
     if (!error) {

@@ -103,8 +103,8 @@
         }
 
         .otp-input-container {
-            width: 256px;
-            height: 60px;
+            width: 50%;
+            height: fit-content;
             background: none;
             position: relative;
             display: flex;
@@ -112,10 +112,12 @@
             align-items: center;
             column-gap: 16px;
             margin-bottom: 12px;
+            flex-direction: column;
 
             input {
-                width: 60px;
-                height: 100%;
+                width: 100%;
+                height: 50px;
+                min-height: 68px;
                 background: var(--gray-shade);
                 outline: none;
                 border: 1px solid var(--gray-shade-border);

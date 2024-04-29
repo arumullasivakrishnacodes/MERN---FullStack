@@ -6,6 +6,8 @@ import DashBoard from './Components/DashBoard/DashBoard';
 import Navbar from './Components/Navbar/Navbar';
 import '../src/App.css'
 import Sidebar from './Components/Sidebar/Sidebar';
+import NewCollections from './Components/NewCollections/NewCollections';
+import NewCollectionList from './Components/NewCollectionList/NewCollectionList';
 
 const App = () => {
   return (
@@ -21,6 +23,8 @@ const App = () => {
               <Route path='/' element={<DashBoard />} />
               <Route path='/allproducts' element={<AllProducts />} />
               <Route path='/addproducts' element={<AddProducts />} />
+              <Route path='/newcollections' element={<NewCollections />} />
+              <Route path='/newcollectionslist' element={<NewCollectionList />} />
             </Routes>
             </div>
           </div>

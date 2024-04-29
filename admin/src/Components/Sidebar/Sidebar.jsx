@@ -10,6 +10,8 @@ const Sidebar = () => {
             <NavLink to='/'><div className={`menu-item`}>DASHBOARD</div></NavLink>
             <NavLink to='/addproducts'><div className={`menu-item`}>ADD PRODUCTS</div></NavLink>
             <NavLink to='/allproducts'><div className={`menu-item`}>PRODUCTS LIST</div></NavLink>
+            <NavLink to='/newcollections'><div className={`menu-item`}>ADD NEWCOLLECTIONS</div></NavLink>
+            <NavLink to='/newcollectionslist'><div className={`menu-item`}>NEWCOLLECTIONS List</div></NavLink>
         </div>
     </div>
   )
