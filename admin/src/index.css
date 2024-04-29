@@ -2,11 +2,27 @@
   
   --background: #fbfbfb;
   --border: #ebebeb;
+  --white: #ffffff;
+  --black: #000000;
+  ---blue: #0078d1;
+  --red: #c00;
 }
 
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
   background: var(--background);
-  height: 100vh;
+  height: 100%;
+  padding: 3%;
+  min-height: 100%;
+
+  a {
+    text-decoration: none;
+    color: var(--black);
+
+    &:hover {
+      text-decoration: none;
+      color: var(--black);
+    }
+  }
 }

@@ -1,0 +1,30 @@
+.sidebar-main-component {
+    padding: 3%;
+
+    .side-bar-menu-container {
+        display: flex;
+        flex-direction: column;
+        row-gap: 12px;
+
+        .menu-item {
+            width: 100%;
+            height: fit-content;
+            padding: 3%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            column-gap: 8px;
+            border: 1px solid var(--border);
+            background: var(--background);
+            font-size: 16px;
+        }
+
+        a.active {
+            .menu-item  {
+                color: var(--blue) !important;
+                border: 1px solid var(--blue) !important;
+            }
+            
+        }
+    }
+}

@@ -80,6 +80,42 @@ const Product = mongoose.model('Product', {
     }
 });
 
+// Schema for creating products
+const NewCollection = mongoose.model('NewCollection', {
+    id: {
+        type: Number,
+        require: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    new_price: {
+        type: Number,
+        required: true
+    },
+    old_price: {
+        type: Number,
+        required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    },
+    available: {
+        type: Boolean,
+        default: true
+    }
+});
+
 //Endpoint for AddProduct
 app.post('/addproduct', async (req,res) => {
     let products = await Product.find({});
@@ -100,6 +136,32 @@ app.post('/addproduct', async (req,res) => {
         old_price: req.body.old_price
     });
     await product.save();
+    res.json({
+        success: true,
+        product: req.body.name
+    })
+});
+
+//Endpoint for AddCollectionProduct
+app.post('/addCollectionProduct', async (req,res) => {
+    let Collectionproducts = await NewCollection.find({});
+    let id;
+    if (Collectionproducts.length > 0) {
+        let last_product = Collectionproducts.slice(-1)[0];
+        id = last_product.id + 1;
+    } else {
+        id = 1;
+    }
+
+    const Collectionproduct = new NewCollection({
+        id: id,
+        name: req.body.name,
+        image: req.body.image,
+        category: req.body.category,
+        new_price: req.body.new_price,
+        old_price: req.body.old_price
+    });
+    await Collectionproduct.save();
     res.json({
         success: true,
         product: req.body.name
