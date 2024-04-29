@@ -42,11 +42,11 @@ function CartProductDetails () {
                     <div className="price-breakup-section">Total Price <span>₹ {cartTotalPrice}</span></div>
                     <div className="price-breakup-section">Discount Price <span>₹ 0</span></div>
                     <div className="price-breakup-section">Coupon Discount <span>₹ 0</span></div>
-                    <div className="price-breakup-section">Platform fee <span>₹ 1</span></div>
-                    <div className="price-breakup-section">Shipping fee <span>₹ 3</span></div>
+                    <div className="price-breakup-section">Platform fee <span>₹ 30</span></div>
+                    <div className="price-breakup-section">Shipping fee <span>₹ 60</span></div>
                 </div>
                 <div className="place-order-section">
-                    <div className="total-price">Total Price <span>₹ {cartTotalPrice + 4}</span></div>
+                    <div className="total-price">Total Price <span>₹ {cartTotalPrice + 90}</span></div>
                     <button className="place-order-btn">PLACE ORDER</button>
                 </div>
             </div>

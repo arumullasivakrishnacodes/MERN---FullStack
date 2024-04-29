@@ -7,8 +7,9 @@ import { ShopContext } from "../../Context/ShopContext";
 import { Link } from "react-router-dom";
 
 function ProductDetails (props) {
+    const {allProducts} = useContext(ShopContext)
     const product = props.product;
-    const filteredProducts = all_product.filter((element) => {return element.category === product.category})
+    const filteredProducts = allProducts.filter((element) => {return element.category === product.category})
     const {addToCart, addToWishlist, cartItems} = useContext(ShopContext);
     const [itemInCart, setItemInCart] = useState(false)
 

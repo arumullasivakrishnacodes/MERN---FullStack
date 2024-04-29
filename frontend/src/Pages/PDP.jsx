@@ -4,9 +4,9 @@ import { ShopContext } from "../Context/ShopContext";
 import { useParams } from "react-router-dom";
 
 function PDP () {
-    const productDetails = useContext(ShopContext);
+    const {allProducts} = useContext(ShopContext);
     const {productID} = useParams();
-    const product = productDetails.ProductsData.find((e) => e.id === Number(productID))
+    const product = allProducts.find((e) => e.id === Number(productID))
 
     return (
         <div className="pdp-main-page-container">

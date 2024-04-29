@@ -28,7 +28,7 @@ const ShopContextProvider = (props) => {
             productExistinCart.qty = quantity + 1;
             setCartItems([...cartItems]);
         } else {
-            const cartItem = ProductsData.find((e) => e.id === Number(itemId));
+            const cartItem = allProducts.find((e) => e.id === Number(itemId));
             setCartItems([...cartItems, {...cartItem, qty: 1 }]); 
         }
         
@@ -45,7 +45,7 @@ const ShopContextProvider = (props) => {
     }
 
     const addToWishlist = (itemId) => {
-        const wishlistItem = ProductsData.find((e) => e.id === Number(itemId));
+        const wishlistItem = allProducts.find((e) => e.id === Number(itemId));
         setWishlistItems([...wishListItems, wishlistItem]);
     }
 
@@ -69,7 +69,6 @@ const ShopContextProvider = (props) => {
     useEffect(() => {
         getCartTotalCount();
         getCartTotalPrice();
-        console.log(cartItems);
     }, [cartItems, getCartTotalPrice, getCartTotalCount]);
 
     useEffect(() => {
