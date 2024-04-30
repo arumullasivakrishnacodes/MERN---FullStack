@@ -11,15 +11,15 @@ function Login() {
   const [otpValue, setOtpValue] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const {AuthenticatedUser} = useContext(ShopContext);
-  const [AuthUser, setAuthUser] = useState(null);
+  // const [AuthUser, setAuthUser] = useState(null);
   const [profileMenuSelect, setProfileMenuSelect] = useState('profile')
 
   useEffect(() => {
     if (localStorage.getItem('loginUser')) {
       setloginstep("Autenticated");
     }
-    setAuthUser(AuthenticatedUser)
-  },[AuthenticatedUser])
+    // setAuthUser(AuthenticatedUser)
+  },[])
 
   const handleChangeMobile = (e) => {
     // Remove non-numeric characters from the input value using a regular expression
@@ -72,6 +72,7 @@ function Login() {
       localStorage.setItem('loginUser', responseData.mobile)
 
       setloginstep("Autenticated");
+      window.location.reload();
     }
   }
 
@@ -142,14 +143,14 @@ function Login() {
     return(
       <div className="profile-details-container row">
           <div className="profile-left-section col-3">
-            {AuthUser ? (
+            {AuthenticatedUser ? (
               <div className="user-greet-container">
               <p>Hello</p>
-              <p className="greet-mobile">{AuthUser.name !== '' ? AuthUser.name : AuthUser.mobile}</p>
+              <p className="greet-mobile">{AuthenticatedUser.name !== '' ? AuthenticatedUser.name : AuthenticatedUser.mobile}</p>
             </div>
             ) : (
               <div className="user-greet-container">
-              <p>Loading...</p>
+              <p>Fetching Details...</p>
               {/* <p className="greet-mobile">{AuthUser.name !== '' ? AuthUser.name : AuthUser.mobile}</p> */}
             </div>
             )}
@@ -160,18 +161,75 @@ function Login() {
             <div onClick={handleprofilemenuSelect} className={`profile-menu ${profileMenuSelect === 'offers' ? 'active' : ''}`} id="offers">Offers</div>
           </div>
           <div className="profile-right-section col-9">
-            <div className={`${profileMenuSelect === 'profile' ? '' : 'd-none'}`}>
-              {AuthUser ? (
-                <div>
-                  <h2>User Details</h2>
-                  <p>Name: {AuthUser.name}</p>
-                  <p>Email: {AuthUser.email}</p>
-                  <p>Mobile: {AuthUser.mobile}</p> {/* Safely access user.mobile */}
-                  {/* Add more user details as needed */}
+            <div className={`${profileMenuSelect === 'profile' ? '' : 'd-none'} profile-details-section`}>
+              <div className="heading-sec">Profile Details</div>
+              {AuthenticatedUser ? (
+                <div className="profile-details">
+                <div className="profile-details-key-item-container">
+                  <p className="profile-details-key-item">Name </p>
+                  <p className="profile-details-key-item">Mobile Number </p>
+                  <p className="profile-details-key-item">Email </p>
+                  <p className="profile-details-key-item">Gender </p>
+                  <p className="profile-details-key-item">Date of Birth </p>
+                  <p className="profile-details-key-item">Alternate MobieNumber</p>
                 </div>
+                <div className="profile-details-key-value-container">
+                  <p className="profile-details-key-value">{AuthenticatedUser.name ? AuthenticatedUser.name : '- Not Added -'}</p>
+                  <p className="profile-details-key-value">{AuthenticatedUser.mobile ? AuthenticatedUser.mobile : '- Not Added -'}</p>
+                  <p className="profile-details-key-value">{AuthenticatedUser.email ? AuthenticatedUser.email : '- Not Added -'}</p>
+                  <p className="profile-details-key-value">{AuthenticatedUser.Gender ? AuthenticatedUser.Gender : '- Not Added -'}</p>
+                  <p className="profile-details-key-value">{AuthenticatedUser.dob ? AuthenticatedUser.dob : '- Not Added -'}</p>
+                  <p className="profile-details-key-value">{AuthenticatedUser.altmobile ? AuthenticatedUser.altmobile : '- Not Added -'}</p>
+                </div>
+              </div>
               ) : (
-                <p>Loading user details...</p>
+                <div className="loading">Fetching Details...</div>
               )}
+              <div className="profile-edit-btn btn" data-toggle="modal" data-target="#editprofiledetails">Edit</div>
+
+              <div class="modal fade" id="editprofiledetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Edit Details</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <i class="bi bi-x"></i>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div className="editdetails-container">
+                        <div className="edit-details-item">
+                          <label>Name</label>
+                          <input type="text" placeholder="Enter your name"/>
+                        </div>
+                        <div className="edit-details-item">
+                          <label>Email</label>
+                          <input type="email" placeholder="Enter your email"/>
+                        </div>
+                        <div className="edit-details-item">
+                          <label>Date of Birth</label>
+                          <input type="date" placeholder="Enter your name"/>
+                        </div>
+                        <div className="edit-details-item">
+                          <label>Gender</label>
+                          <div className="d-flex">
+                            <div className="gender-type">Male</div>
+                            <div className="gender-type">Female</div>
+                          </div>
+                        </div>
+                        <div className="edit-details-item">
+                          <label>Alternate MobileNumber</label>
+                          <input type="text" placeholder="Enter your Alternate MobileNumber"/>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" className="btn btn-secondary edit-profile-done" data-dismiss="modal">Done</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className={`${profileMenuSelect === 'orders' ? '' : 'd-none'}`}>orders</div>
             <div className={`${profileMenuSelect === 'address' ? '' : 'd-none'}`}>address</div>

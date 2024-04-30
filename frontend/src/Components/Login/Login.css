@@ -198,6 +198,132 @@
             }
         }
     }
+
+    .profile-right-section {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+
+        .profile-details-section {
+            width: 66%;
+            height: fit-content;
+            border: 1px solid var(--gray-shade-border);
+            padding: 12px 24px;
+
+            .heading-sec {
+                font-size: 32px;
+                font-weight: 600;
+                text-align: left;
+                height: 62px;
+                border-bottom: 1px solid var(--gray-shade-border);
+                margin-bottom: 32px;
+            }
+
+            .profile-details {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                column-gap: 3rem;
+
+                .profile-details-key-item-container {
+                    width: fit-content;
+                    height: fit-content;
+                    padding: 18px 24px;
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 1rem;
+
+                    .profile-details-key-item {
+                        font-size: 18px;
+                        font-weight: 600;
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: center;
+                        min-width: fit-content;
+                    }
+                }
+
+                .profile-details-key-value-container {
+                    width: fit-content;
+                    height: fit-content;
+                    padding: 18px 24px;
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 1rem;
+
+                    .profile-details-key-value {
+                        font-size: 18px;
+                        font-weight: 300;
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: center;
+                        min-width: fit-content;
+                    }
+                }
+            }
+
+            .profile-edit-btn {
+                width: 100%;
+                height: 50px;
+                background: var(--primary-blue);
+                color: var(--white);
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .editdetails-container {
+                display: flex;
+                flex-direction: column;
+                row-gap: 24px;
+
+                .edit-details-item {
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 0;
+
+                    label {
+                        font-size: 16px;
+                        text-align: left;
+                        font-weight: 600;
+                    }
+
+                    input {
+                        width: 100%;
+                        height: 50px;
+                        border: 1px solid var(--gray-shade-border);
+                        outline: none;
+                        background: var(--white);
+                        padding: 0 24px;
+                    }
+
+                    .gender-type {
+                        width: fit-content;
+                        height: fit-content;
+                        font-size: 16px;
+                        padding: 14px 25px;
+                        border: 1px solid var(--gray-shade-border);
+                        margin-right: 12px;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .edit-profile-done {
+                width: 100%;
+                height: 50px;
+                background: var(--primary-blue);
+                color: var(--white);
+                font-size: 16px;
+                font-weight: 600;
+                outline: none;
+                border: none;
+            }
+        }
+    }
 }
 
 @media (max-width:768px) {
