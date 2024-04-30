@@ -239,6 +239,12 @@ app.post('/login', async (req,res) => {
     
 });
 
+app.get('/users', async (req,res)=> {
+    let users = await User.find({});
+    res.send(users);
+    console.log(users);
+})
+
 app.listen(port,(error) => {
     if (!error) {
         console.log('Server Running on Port' + port);

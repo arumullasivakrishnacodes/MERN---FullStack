@@ -5,6 +5,8 @@ export const ShopContext = createContext(null);
 
 const ShopContextProvider = (props) => {
     const [allProducts, setAllProducts] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [AuthenticatedUser, setAuthenticatedUser] = useState([])
     const [cartItems, setCartItems] = useState([]);
     const [cartItemsCount, setCartItemsCount] = useState(0);
     const [wishlistItemsCount, setWishlistItemsCount] = useState(0);
@@ -16,10 +18,23 @@ const ShopContextProvider = (props) => {
             .then((res) => res.json())
             .then((data) => { setAllProducts(data) });
     };
+
+    const fetchUsers = async () => {
+        await fetch('http://localhost:4000/users')
+        .then((res) => res.json())
+        .then((data) => { setUsers(data) })
+    }
     
     useEffect(() => {
         fetchAllProducts();
+        fetchUsers();
     }, []);
+
+    useEffect(() => {
+        const loggedinUser = users.find((e) => e.mobile === Number(localStorage.getItem('loginUser')));
+        localStorage.setItem('check', loggedinUser);
+        setAuthenticatedUser(loggedinUser)
+    }, [users]);
     
 
     const addToCart = (itemId, quantity) => {
@@ -76,7 +91,7 @@ const ShopContextProvider = (props) => {
         setWishlistItemsCount(wishListItemsLength);
     }, [wishListItems])
     
-    const productsData = {allProducts, ProductsData, cartItems, wishListItems, cartItemsCount, wishlistItemsCount, cartTotalPrice, addToCart, addToWishlist, removeCartItem, removeWishlistItem};
+    const productsData = {allProducts, users, AuthenticatedUser,  ProductsData, cartItems, wishListItems, cartItemsCount, wishlistItemsCount, cartTotalPrice, addToCart, addToWishlist, removeCartItem, removeWishlistItem};
 
     return (
         <ShopContext.Provider value={productsData}>
